@@ -60,14 +60,14 @@ Please send email to lpj008@126.com
 
 ## Citation
 
-@article{Liu2019MWCNN, 
-title={Multi-Level Wavelet Convolutional Neural Networks}, 
-author={Liu, Pengju and Zhang, Hongzhi and Lian Wei and Zuo, Wangmeng}, 
-journal={IEEE Access}, 
-volume={7}, 
-pages={74973-74985}, 
-year={2019}, 
-publisher={IEEE} 
+@article{Liu2019MWCNN,    
+title={Multi-Level Wavelet Convolutional Neural Networks},    
+author={Liu, Pengju and Zhang, Hongzhi and Lian Wei and Zuo, Wangmeng},         
+journal={IEEE Access},     
+volume={7},      
+pages={74973-74985},     
+year={2019},    
+publisher={IEEE}    
 }
 
 
