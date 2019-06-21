@@ -19,7 +19,8 @@ single image super-resolution, JPEG image artifacts removal and object classific
 Data Set: [DIV2K 800 training images](https://data.vision.ee.ethz.ch/cvl/DIV2K/).
 
 * Start
- * Using Generating code to 
+ * Using Generating code to generate 'mat' data for training.
+ 
 
 
 
