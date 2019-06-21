@@ -6,13 +6,14 @@ single image super-resolution, JPEG image artifacts removal and object classific
 
 ## Dependencies
 * Python 3.5
-### PyTorch >= 1.0.0
-### numpy
-### skimage
-### imageio
-### matplotlib
-### tqdm
-### h5py
+* PyTorch >= 1.0.0
+* numpy
+* skimage
+* imageio
+* matplotlib
+* tqdm
+* h5py
+* scipy 1.0.0
 
 
 
