@@ -5,7 +5,7 @@ Our paper has been accepted by [IEEE Access](https://ieeexplore.ieee.org/stamp/s
  
  
 <p align="center">
-    <img src="images/MWCNN.tif" width="100%">
+    <img src="images/MWCNN.png" width="100%">
     <br />    <small>  </small>
 </p>
 
