@@ -64,11 +64,36 @@ python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --sa
 ## Results
 
 ### Image denoising
+<p align="center">
+    <img src="./images/denoising_tab.png" width="100%">
+    <br />    <small>  </small>
+</p>
+<p align="center">
+    <img src="./images/dn_image.png" width="100%">
+    <br />    <small>  </small>
+</p>
 
 
 ### SISR
+<p align="center">
+    <img src="./images/sisr_tab.png" width="100%">
+    <br />    <small>  </small>
+</p>
+<p align="center">
+    <img src="./images/sisr_images.png" width="100%">
+    <br />    <small>  </small>
+</p>
+
 
 ### JPEG Image Artifacts Removal
+<p align="center">
+    <img src="./images/JISR_tab.png" width="100%">
+    <br />    <small>  </small>
+</p>
+<p align="center">
+    <img src="./images/JIAR_images.png" width="100%">
+    <br />    <small>  </small>
+</p>
 
 
 
