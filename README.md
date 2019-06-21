@@ -32,7 +32,7 @@ where scale indicates noise level here.
 python main.py --model MWCNN --save MWCNN_DeNoising --scale 2 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
 ```
 
-  * For image denoising
+  * For JPEG image artifacts removals
 ```python
 python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
 ```
@@ -40,7 +40,20 @@ where scale indicates quality factor here.
 
 ## Test
 * Pretraining model can be found here.
+* Test commond
 
+ * For image denoising
+```python
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --save_results --print_model --n_colors 1 --save_models --test_only --self_ensemble --resume -1 --pre_train pretrain_model/denoising/ --test_set Set68
+```
+ * For image SISR
+```python
+python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_results --print_model --n_colors 1 --save_models --test_only --self_ensemble --resume -1 --pre_train pretrain_model/JIAR/ --test_set Set5
+```
+ * For JPEG image artifacts removals
+```python
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --n_colors 1 --save_models --test_only --self_ensemble --resume -1 --pre_train pretrain_model/JIAR/ --test_set LIVE1
+```
 
 
 
