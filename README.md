@@ -25,8 +25,20 @@ Data Set: [DIV2K 800 training images](https://data.vision.ee.ethz.ch/cvl/DIV2K/)
 ```python
 python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
 ```
+where scale indicates noise level here.
 
- 
+  * For image SISR
+```python
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 2 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
+```
+
+  * For image denoising
+```python
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
+```
+where scale indicates quality factor here. 
+
+## Test
 
 
 
