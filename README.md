@@ -18,9 +18,9 @@ single image super-resolution, JPEG image artifacts removal and object classific
 ## Train
 Data Set: [DIV2K 800 training images](https://data.vision.ee.ethz.ch/cvl/DIV2K/).
 
-* First, using Generating code to generate 'mat' data for training.
+* First, using Generating code to generate 'mat' data for training, then modify the path of training data in data.srdata file.
 * Second, using the fllowing to start training code:
-
+ * For image denoising
 ```python
 python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --save_results --print_model --patch_size 256 --batch_size 8 --print_every 1000 --lr 1.024e-4 --lr_decay 100 --n_colors 1 --save_models
 ```
