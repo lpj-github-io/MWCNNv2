@@ -55,6 +55,31 @@ python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_res
 python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --n_colors 1 --save_models --test_only --self_ensemble --resume -1 --pre_train pretrain_model/JIAR/ --test_set LIVE1
 ```
 
+## Contact
+Please send email to lpj008@126.com
+
+## Citation
+@article{Liu2019MWCNN,
+  title={Multi-Level Wavelet Convolutional Neural Networks},
+  author={Liu, Pengju and Zhang, Hongzhi and Lian Wei and Zuo, Wangmeng},
+  journal={IEEE Access},
+  volume={7},
+  issue={1},
+  pages={74973-74985},
+  year={2019},
+  publisher={IEEE}
+}
+
+
+@InProceedings{Liu_2018_CVPR_Workshops,                                                                        
+author = {Liu, Pengju and Zhang, Hongzhi and Zhang, Kai and Lin, Liang and Zuo, Wangmeng},       
+title = {Multi-Level Wavelet-CNN for Image Restoration},                 
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},          
+month = {June},    
+year = {2018}                     
+}
+
+
 
 
 ## Acknowledgements
