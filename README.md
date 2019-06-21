@@ -5,5 +5,5 @@ Our paper has been accepted by IEEE Access!!
 single image super-resolution, JPEG image artifacts removal and object classification.
 
 
-##Acknowledgements
-This code is built on [EDSR (PyTorch](http://www.vlfeat.org/matconvnet/). We thank the authors for sharing their codes of EDSR Torch version and PyTorch version.
+## Acknowledgements
+This code is built on [EDSR (PyTorch)](https://github.com/thstkdgus35/EDSR-PyTorch). We thank the authors for sharing their codes of [EDSR Torch  version](https://github.com/LimBee/NTIRE2017) and [PyTorch version](https://github.com/thstkdgus35/EDSR-PyTorch).
