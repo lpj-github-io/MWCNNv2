@@ -54,7 +54,7 @@ python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --sa
 ```
  * For image SISR
 ```python
-python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --self_ensemble --resume -1 --pre_train pretrain_model/JIAR/ --data_test Set5 --task_type SISR 
+python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --self_ensemble --resume -1 --pre_train pretrain_model/SISR/ --data_test Set5 --task_type SISR 
 ```
  * For JPEG image artifacts removals
 ```python
