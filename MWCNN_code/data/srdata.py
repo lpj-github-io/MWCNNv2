@@ -121,7 +121,7 @@ class SRData(data.Dataset):
         else:
             scale = self.scale[0]
             if self.args.task_type == 'denoising':
-                lr, hr = common.get_img_noise(
+                lr, hr = common.add_img_noise(
                     hr, patch_size, scale
                 )
             if self.args.task_type == 'SISR':
