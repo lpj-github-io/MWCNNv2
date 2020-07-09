@@ -1,5 +1,5 @@
 ## Multi-level Wavelet Convolutional Neural Networks
-Our paper has been accepted by [IEEE Access](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8732332)!!
+Our paper has been accepted by [IEEE Access](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8732332)
 ## Abstract
  In computer vision, convolutional networks (CNNs) often adopts pooling to enlarge receptive field which has the advantage of low computational complexity. However, pooling can cause information loss and thus is detrimental to further operations such as features extraction and analysis. Recently, dilated filter has been proposed to trade off between receptive field size and efficiency. But the accompanying gridding effect can cause a sparse sampling of input images with checkerboard patterns. To address this problem, in this paper, we propose a novel multi-level wavelet CNN (MWCNN) model to achieve better trade-off between receptive field size and computational efficiency. The core idea is to embed wavelet transform into CNN architecture to reduce the resolution of feature maps while at the same time, increasing receptive field. Specifically, MWCNN for image restoration is based on U-Net architecture, and inverse wavelet transform (IWT) is deployed to reconstruct the high resolution (HR) feature maps. The proposed MWCNN can also be viewed as an improvement of dilated filter and a generalization of average pooling, and can be applied to not only image restoration tasks, but also any CNNs requiring a pooling operation. The experimental results demonstrate effectiveness of the proposed MWCNN for tasks such as image denoising,
  
@@ -50,15 +50,15 @@ where scale indicates quality factor here.
 
  * For image denoising
 ```python
-python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --self_ensemble --resume -1 --pre_train pretrain_model/denoising/ --data_test Set68 --task_type denoising
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 15 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --resume -1 --pre_train pretrain_model/denoising/ --data_test Set68 --task_type denoising
 ```
  * For image SISR
 ```python
-python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --self_ensemble --resume -1 --pre_train pretrain_model/SISR/ --data_test Set5 --task_type SISR 
+python main.py --model MWCNN --save MWCNN_SISR --scale 2 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --resume -1 --pre_train pretrain_model/SISR/ --data_test Set5 --task_type SISR 
 ```
  * For JPEG image artifacts removals
 ```python
-python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --self_ensemble --resume -1 --pre_train pretrain_model/JIAR/ --data_test LIVE1 --task_type JIAR
+python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --save_results --print_model --n_colors 1 --test_only --resume -1 --pre_train pretrain_model/JIAR/ --data_test LIVE1 --task_type JIAR
 ```
 
 ## Results
