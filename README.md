@@ -45,7 +45,7 @@ python main.py --model MWCNN --save MWCNN_DeNoising --scale 10 --n_feats 64 --sa
 where scale indicates quality factor here. 
 
 ## Test
-* Pretraining model can be found [here](https://drive.google.com/drive/folders/15_CFSFcD6UxyHj74keNQpWB8peeHQ3wb?usp=sharing.).
+* Pretraining model can be found [here](https://drive.google.com/drive/folders/1oQljLRbfifDm1YHxJ8zrTpFWX8kTWp6z?usp=sharing).
 * Test commond
 
  * For image denoising
