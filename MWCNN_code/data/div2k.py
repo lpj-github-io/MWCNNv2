@@ -11,10 +11,23 @@ import torch.utils.data as data
 
 class DIV2K(srdata.SRData):
     def __init__(self, args, train=True):
+        """
+        Initialize the class
+
+        Args:
+            self: (todo): write your description
+            train: (todo): write your description
+        """
         super(DIV2K, self).__init__(args, train)
         self.repeat = 1#args.test_every // (args.n_train // args.batch_size)
 
     def _scan(self):
+        """
+        Return a list of directories.
+
+        Args:
+            self: (todo): write your description
+        """
         # list_hr = []
         # for entry in os.scandir(self.dir_hr):
         #     filename = os.path.splitext(entry.name)[0]
@@ -78,12 +91,25 @@ class DIV2K(srdata.SRData):
     #     )
 
     def __len__(self):
+        """
+        Return the length of the image.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.train:
             return len(self.images_hr) * self.repeat
         else:
             return len(self.images_hr)
 
     def _get_index(self, idx):
+        """
+        Return index of the index
+
+        Args:
+            self: (todo): write your description
+            idx: (str): write your description
+        """
         if self.train:
             return idx % len(self.images_hr)
         else:

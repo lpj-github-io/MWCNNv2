@@ -5,6 +5,12 @@ from torch.utils.data.dataloader import default_collate
 
 class Data:
     def __init__(self, args):
+        """
+        Initialize the module.
+
+        Args:
+            self: (todo): write your description
+        """
         kwargs = {}
         if not args.cpu:
             kwargs['collate_fn'] = default_collate

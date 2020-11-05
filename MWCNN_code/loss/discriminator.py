@@ -4,6 +4,13 @@ import torch.nn as nn
 
 class Discriminator(nn.Module):
     def __init__(self, args, gan_type='GAN'):
+        """
+        Initialize the module.
+
+        Args:
+            self: (todo): write your description
+            gan_type: (todo): write your description
+        """
         super(Discriminator, self).__init__()
 
         in_channels = 3
@@ -38,6 +45,13 @@ class Discriminator(nn.Module):
         self.classifier = nn.Sequential(*m_classifier)
 
     def forward(self, x):
+        """
+        Forward computation.
+
+        Args:
+            self: (todo): write your description
+            x: (todo): write your description
+        """
         features = self.features(x)
         output = self.classifier(features.view(features.size(0), -1))
 

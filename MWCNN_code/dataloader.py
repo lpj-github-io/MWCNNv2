@@ -29,6 +29,19 @@ else:
     import queue
 
 def _ms_loop(dataset, index_queue, data_queue, collate_fn, scale, seed, init_fn, worker_id):
+    """
+    The main loop.
+
+    Args:
+        dataset: (todo): write your description
+        index_queue: (dict): write your description
+        data_queue: (todo): write your description
+        collate_fn: (todo): write your description
+        scale: (float): write your description
+        seed: (int): write your description
+        init_fn: (todo): write your description
+        worker_id: (str): write your description
+    """
     global _use_shared_memory
     _use_shared_memory = True
     _set_worker_signal_handlers()
@@ -156,6 +169,13 @@ else:
 class ExceptionWrapper(object):
     r"""Wraps an exception plus traceback to communicate across threads"""
     def __init__(self, exc_info):
+        """
+        Initialize the exception.
+
+        Args:
+            self: (todo): write your description
+            exc_info: (todo): write your description
+        """
         # It is important that we don't store exc_info, see
         # NOTE [ Python Traceback Reference Cycle Problem ]
         self.exc_type = exc_info[0]
@@ -177,6 +197,12 @@ if IS_WINDOWS:
     # of the manager and ask if the process status has changed.
     class ManagerWatchdog(object):
         def __init__(self):
+            """
+            Initialize the kernel manager.
+
+            Args:
+                self: (todo): write your description
+            """
             self.manager_pid = os.getppid()
 
             self.kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -195,6 +221,12 @@ if IS_WINDOWS:
             self.manager_dead = False
 
         def is_alive(self):
+            """
+            Returns true if this kernel is alive.
+
+            Args:
+                self: (todo): write your description
+            """
             if not self.manager_dead:
                 # Value obtained from https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032.aspx
                 self.manager_dead = self.kernel32.WaitForSingleObject(self.manager_handle, 0) == 0
@@ -202,16 +234,41 @@ if IS_WINDOWS:
 else:
     class ManagerWatchdog(object):
         def __init__(self):
+            """
+            Initialize the manager.
+
+            Args:
+                self: (todo): write your description
+            """
             self.manager_pid = os.getppid()
             self.manager_dead = False
 
         def is_alive(self):
+            """
+            Return true if the lock is alive.
+
+            Args:
+                self: (todo): write your description
+            """
             if not self.manager_dead:
                 self.manager_dead = os.getppid() != self.manager_pid
             return not self.manager_dead
 
 
 def _worker_loop(dataset, index_queue, data_queue, done_event, collate_fn, seed, init_fn, worker_id):
+    """
+    The worker loop.
+
+    Args:
+        dataset: (todo): write your description
+        index_queue: (dict): write your description
+        data_queue: (todo): write your description
+        done_event: (todo): write your description
+        collate_fn: (todo): write your description
+        seed: (int): write your description
+        init_fn: (todo): write your description
+        worker_id: (str): write your description
+    """
     # See NOTE [ Data Loader Multiprocessing Shutdown Logic ] for details on the
     # logic of this function.
 
@@ -266,6 +323,15 @@ def _worker_loop(dataset, index_queue, data_queue, done_event, collate_fn, seed,
 
 
 def _pin_memory_loop(in_queue, out_queue, device_id, done_event):
+    """
+    This function to loop for a loop.
+
+    Args:
+        in_queue: (todo): write your description
+        out_queue: (todo): write your description
+        device_id: (int): write your description
+        done_event: (todo): write your description
+    """
     torch.cuda.set_device(device_id)
 
     # See NOTE [ Data Loader Multiprocessing Shutdown Logic ] for details on the
@@ -352,6 +418,12 @@ def default_collate(batch):
 
 
 def pin_memory_batch(batch):
+    """
+    Pin a batch of examples into a batch.
+
+    Args:
+        batch: (todo): write your description
+    """
     if isinstance(batch, torch.Tensor):
         return batch.pin_memory()
     elif isinstance(batch, string_classes):
@@ -370,6 +442,11 @@ handler needs to be set for all DataLoaders in a process."""
 
 
 def _set_SIGCHLD_handler():
+    """
+    Sets the thread handler.
+
+    Args:
+    """
     # Windows doesn't support SIGCHLD handler
     if sys.platform == 'win32':
         return
@@ -386,6 +463,13 @@ def _set_SIGCHLD_handler():
         previous_handler = None
 
     def handler(signum, frame):
+        """
+        Handle the given signum signal.
+
+        Args:
+            signum: (int): write your description
+            frame: (todo): write your description
+        """
         # This following call uses `waitid` with WNOHANG from C side. Therefore,
         # Python can still get and update the process status successfully.
         _error_if_any_worker_fails()
@@ -399,6 +483,11 @@ def _set_SIGCHLD_handler():
 _python_exit_status = False
 
 def _set_python_exit_flag():
+    """
+    Sets the global python python version.
+
+    Args:
+    """
     global _python_exit_status
     _python_exit_status = True
 
@@ -409,6 +498,13 @@ class _MSDataLoaderIter(object):
 
 
     def __init__(self, loader):
+        """
+        Initialize the worker.
+
+        Args:
+            self: (todo): write your description
+            loader: (todo): write your description
+        """
         self.dataset = loader.dataset
         self.collate_fn = loader.collate_fn
         self.batch_sampler = loader.batch_sampler
@@ -477,9 +573,21 @@ class _MSDataLoaderIter(object):
                 self._put_indices()
 
     def __len__(self):
+        """
+        Returns the number of the batch.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.batch_sampler)
 
     def _get_batch(self):
+        """
+        Get a batch data batch.
+
+        Args:
+            self: (todo): write your description
+        """
         # In the non-timeout case, worker exit is covered by SIGCHLD handler.
         # But if `pin_memory=True`, we still need account for the possibility
         # that `pin_memory_thread` dies.
@@ -503,6 +611,12 @@ class _MSDataLoaderIter(object):
             return self.data_queue.get()
 
     def __next__(self):
+        """
+        Returns the next batch.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.num_workers == 0:  # same-process loading
             indices = next(self.sample_iter)  # may raise StopIteration
             batch = self.collate_fn([self.dataset[i] for i in indices])
@@ -532,9 +646,21 @@ class _MSDataLoaderIter(object):
     next = __next__  # Python 2 compatibility
 
     def __iter__(self):
+        """
+        Returns an iterator over the iterable.
+
+        Args:
+            self: (todo): write your description
+        """
         return self
 
     def _put_indices(self):
+        """
+        Updates the batches of the workers.
+
+        Args:
+            self: (todo): write your description
+        """
         assert self.batches_outstanding < 2 * self.num_workers
         indices = next(self.sample_iter, None)
         if indices is None:
@@ -545,6 +671,13 @@ class _MSDataLoaderIter(object):
         self.send_idx += 1
 
     def _process_next_batch(self, batch):
+        """
+        Returns the next batch of next batch.
+
+        Args:
+            self: (todo): write your description
+            batch: (array): write your description
+        """
         self.rcvd_idx += 1
         self._put_indices()
         if isinstance(batch, ExceptionWrapper):
@@ -552,6 +685,12 @@ class _MSDataLoaderIter(object):
         return batch
 
     def __getstate__(self):
+        """
+        Returns the state of the current state.
+
+        Args:
+            self: (todo): write your description
+        """
         # TODO: add limited pickling support for sharing an iterator
         # across multiple threads for HOGWILD.
         # Probably the best way to do this is by moving the sample pushing
@@ -560,6 +699,12 @@ class _MSDataLoaderIter(object):
         raise NotImplementedError("_DataLoaderIter cannot be pickled")
 
     def _shutdown_workers(self):
+        """
+        Shutdown the workers.
+
+        Args:
+            self: (todo): write your description
+        """
         # See NOTE [ Data Loader Multiprocessing Shutdown Logic ] for details on
         # the logic of this function.
         if _python_exit_status is True or _python_exit_status is None:
@@ -606,6 +751,12 @@ class _MSDataLoaderIter(object):
                 w.join()
 
     def __del__(self):
+        """
+        Deliver all workers.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.num_workers > 0:
             self._shutdown_workers()
 
@@ -639,6 +790,24 @@ class MSDataLoader(DataLoader):
     def __init__(self, args, dataset, batch_size=1, shuffle=False, sampler=None, batch_sampler=None,
                  num_workers=0, collate_fn=default_collate, pin_memory=False, drop_last=False,
                  timeout=0, worker_init_fn=None):
+        """
+        Initialize the sampler.
+
+        Args:
+            self: (todo): write your description
+            dataset: (todo): write your description
+            batch_size: (int): write your description
+            shuffle: (bool): write your description
+            sampler: (todo): write your description
+            batch_sampler: (todo): write your description
+            num_workers: (int): write your description
+            collate_fn: (todo): write your description
+            default_collate: (str): write your description
+            pin_memory: (str): write your description
+            drop_last: (todo): write your description
+            timeout: (int): write your description
+            worker_init_fn: (str): write your description
+        """
         self.dataset = dataset
         self.batch_size = batch_size
         self.num_workers = num_workers
@@ -688,6 +857,14 @@ class MSDataLoader(DataLoader):
         self.__initialized = True
 
     def __setattr__(self, attr, val):
+        """
+        Sets the attribute of the object.
+
+        Args:
+            self: (todo): write your description
+            attr: (str): write your description
+            val: (float): write your description
+        """
         if self.__initialized and attr in ('batch_size', 'sampler', 'drop_last'):
             raise ValueError('{} attribute should not be set after {} is '
                              'initialized'.format(attr, self.__class__.__name__))
@@ -695,7 +872,19 @@ class MSDataLoader(DataLoader):
         super(MSDataLoader, self).__setattr__(attr, val)
 
     def __iter__(self):
+        """
+        Returns an iterator over the data iterators.
+
+        Args:
+            self: (todo): write your description
+        """
         return _MSDataLoaderIter(self)
 
     def __len__(self):
+        """
+        Returns the number of the batch.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.batch_sampler)

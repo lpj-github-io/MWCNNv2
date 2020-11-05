@@ -13,6 +13,14 @@ import h5py
 
 class SRData(data.Dataset):
     def __init__(self, args, train=True, benchmark=False):
+        """
+        Initialize dataset
+
+        Args:
+            self: (todo): write your description
+            train: (todo): write your description
+            benchmark: (todo): write your description
+        """
         self.args = args
         self.train = train
         self.split = 'train' if train else 'test'
@@ -35,9 +43,22 @@ class SRData(data.Dataset):
 
 
     def _scan(self):
+        """
+        Scan the given scan.
+
+        Args:
+            self: (todo): write your description
+        """
         raise NotImplementedError
     #
     def _set_filesystem(self, dir_data):
+        """
+        Set the directory.
+
+        Args:
+            self: (todo): write your description
+            dir_data: (str): write your description
+        """
         raise NotImplementedError
 
     # def _name_hrbin(self):
@@ -47,6 +68,13 @@ class SRData(data.Dataset):
     #     raise NotImplementedError
 
     def __getitem__(self, idx):
+        """
+        Return a tensor for a tensor.
+
+        Args:
+            self: (todo): write your description
+            idx: (list): write your description
+        """
         hr, filename = self._load_file(idx)
         if self.train:
 
@@ -66,12 +94,32 @@ class SRData(data.Dataset):
 
 
     def __len__(self):
+        """
+        Returns the length of the image.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.images_hr)
 
     def _get_index(self, idx):
+        """
+        Returns the index of the given index.
+
+        Args:
+            self: (todo): write your description
+            idx: (str): write your description
+        """
         return idx
 
     def _load_file(self, idx):
+        """
+        Loads an image from disk
+
+        Args:
+            self: (todo): write your description
+            idx: (str): write your description
+        """
         idx = self._get_index(idx)
         # lr = self.images_lr[self.idx_scale][idx]
         hr = self.images_hr[idx]
@@ -99,6 +147,14 @@ class SRData(data.Dataset):
         return hr, filename
 
     def _get_patch(self, hr, filename):
+        """
+        Get an instance of a patch.
+
+        Args:
+            self: (todo): write your description
+            hr: (str): write your description
+            filename: (str): write your description
+        """
         patch_size = self.args.patch_size
 
         if self.train:
@@ -137,6 +193,14 @@ class SRData(data.Dataset):
 
 
     def _get_patch_test(self, hr, scale):
+        """
+        Calculate test test function.
+
+        Args:
+            self: (todo): write your description
+            hr: (str): write your description
+            scale: (float): write your description
+        """
 
         ih, iw = hr.shape[0:2]
         lr = imresize(imresize(hr, [int(ih/scale), int(iw/scale)], 'bicubic'), [ih, iw], 'bicubic')
@@ -151,5 +215,12 @@ class SRData(data.Dataset):
 
 
     def set_scale(self, idx_scale):
+        """
+        Set scale.
+
+        Args:
+            self: (todo): write your description
+            idx_scale: (str): write your description
+        """
         self.idx_scale = idx_scale
 

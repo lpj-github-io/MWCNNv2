@@ -11,9 +11,22 @@ import torch.utils.data as data
 
 class Benchmark(srdata.SRData):
     def __init__(self, args, train=True):
+        """
+        Initialize the benchmark.
+
+        Args:
+            self: (todo): write your description
+            train: (todo): write your description
+        """
         super(Benchmark, self).__init__(args, train, benchmark=True)
 
     def _scan(self):
+        """
+        Return a list of directories.
+
+        Args:
+            self: (todo): write your description
+        """
 
 
         if self.train:
@@ -29,6 +42,13 @@ class Benchmark(srdata.SRData):
         return list_hr#, list_lr
 
     def _set_filesystem(self, dir_data):
+        """
+        Set the filesystem path.
+
+        Args:
+            self: (todo): write your description
+            dir_data: (str): write your description
+        """
         self.apath = os.path.join(dir_data, 'benchmark', self.args.data_test)
         self.dir_hr = os.path.join(self.args.dir_data,self.args.data_test )
         self.ext = '*.*'

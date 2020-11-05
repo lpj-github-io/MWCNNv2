@@ -13,6 +13,13 @@ import torch.nn.functional as F
 
 class Loss(nn.modules.loss._Loss):
     def __init__(self, args, ckp):
+        """
+        Initialize the module.
+
+        Args:
+            self: (todo): write your description
+            ckp: (int): write your description
+        """
         super(Loss, self).__init__()
         print('Preparing loss function:')
 
@@ -67,6 +74,14 @@ class Loss(nn.modules.loss._Loss):
         if args.load != '.': self.load(ckp.dir, cpu=args.cpu)
 
     def forward(self, sr, hr):
+        """
+        Forward loss
+
+        Args:
+            self: (todo): write your description
+            sr: (todo): write your description
+            hr: (todo): write your description
+        """
         losses = []
         for i, l in enumerate(self.loss):
             if l['function'] is not None:
@@ -84,17 +99,43 @@ class Loss(nn.modules.loss._Loss):
         return loss_sum
 
     def step(self):
+        """
+        Perform a single step.
+
+        Args:
+            self: (todo): write your description
+        """
         for l in self.get_loss_module():
             if hasattr(l, 'scheduler'):
                 l.scheduler.step()
 
     def start_log(self):
+        """
+        Starts the log
+
+        Args:
+            self: (todo): write your description
+        """
         self.log = torch.cat((self.log, torch.zeros(1, len(self.loss))))
 
     def end_log(self, n_batches):
+        """
+        Ends the next n_log.
+
+        Args:
+            self: (todo): write your description
+            n_batches: (int): write your description
+        """
         self.log[-1].div_(n_batches)
 
     def display_loss(self, batch):
+        """
+        Display loss loss.
+
+        Args:
+            self: (todo): write your description
+            batch: (todo): write your description
+        """
         n_samples = batch + 1
         log = []
         for l, c in zip(self.loss, self.log[-1]):
@@ -103,6 +144,14 @@ class Loss(nn.modules.loss._Loss):
         return ''.join(log)
 
     def plot_loss(self, apath, epoch):
+        """
+        Plots loss loss.
+
+        Args:
+            self: (todo): write your description
+            apath: (str): write your description
+            epoch: (int): write your description
+        """
         axis = np.linspace(1, epoch, epoch)
         for i, l in enumerate(self.loss):
             label = '{} Loss'.format(l['type'])
@@ -117,16 +166,37 @@ class Loss(nn.modules.loss._Loss):
             plt.close(fig)
 
     def get_loss_module(self):
+        """
+        Returns the loss module
+
+        Args:
+            self: (todo): write your description
+        """
         if self.n_GPUs == 1:
             return self.loss_module
         else:
             return self.loss_module.module
 
     def save(self, apath):
+        """
+        Saves the apath to apath.
+
+        Args:
+            self: (todo): write your description
+            apath: (str): write your description
+        """
         torch.save(self.state_dict(), os.path.join(apath, 'loss.pt'))
         torch.save(self.log, os.path.join(apath, 'loss_log.pt'))
 
     def load(self, apath, cpu=False):
+        """
+        Load the loss
+
+        Args:
+            self: (todo): write your description
+            apath: (str): write your description
+            cpu: (str): write your description
+        """
         if cpu:
             kwargs = {'map_location': lambda storage, loc: storage}
         else:

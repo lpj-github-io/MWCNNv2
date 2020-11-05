@@ -17,29 +17,71 @@ import torch.optim.lr_scheduler as lrs
 
 class timer():
     def __init__(self):
+        """
+        Initialize the internal state.
+
+        Args:
+            self: (todo): write your description
+        """
         self.acc = 0
         self.tic()
 
     def tic(self):
+        """
+        Set the timer.
+
+        Args:
+            self: (todo): write your description
+        """
         self.t0 = time.time()
 
     def toc(self):
+        """
+        Return the time as a list.
+
+        Args:
+            self: (todo): write your description
+        """
         return time.time() - self.t0
 
     def hold(self):
+        """
+        Hold the next row
+
+        Args:
+            self: (todo): write your description
+        """
         self.acc += self.toc()
 
     def release(self):
+        """
+        Release the next lock.
+
+        Args:
+            self: (todo): write your description
+        """
         ret = self.acc
         self.acc = 0
 
         return ret
 
     def reset(self):
+        """
+        Reset the internal state.
+
+        Args:
+            self: (todo): write your description
+        """
         self.acc = 0
 
 class checkpoint():
     def __init__(self, args):
+        """
+        Initialize the directory.
+
+        Args:
+            self: (todo): write your description
+        """
         self.args = args
         self.ok = True
         self.log = torch.Tensor()
@@ -61,6 +103,12 @@ class checkpoint():
             args.load = '.'
 
         def _make_dir(path):
+            """
+            Create a directory if it doesn t exist.
+
+            Args:
+                path: (str): write your description
+            """
             if not os.path.exists(path): os.makedirs(path)
 
         _make_dir(self.dir)
@@ -76,6 +124,15 @@ class checkpoint():
             f.write('\n')
 
     def save(self, trainer, epoch, is_best=False):
+        """
+        Saves the model to disk.
+
+        Args:
+            self: (todo): write your description
+            trainer: (todo): write your description
+            epoch: (int): write your description
+            is_best: (bool): write your description
+        """
         trainer.model.save(self.dir, epoch, self.args.model, is_best=is_best)
         # trainer.model_NLEst.save(self.dir, epoch, 'NL_EST', is_best=is_best)
         # trainer.model_KMEst.save(self.dir, epoch, 'KM_EST', is_best=is_best)
@@ -90,9 +147,24 @@ class checkpoint():
         )
 
     def add_log(self, log):
+        """
+        Add a log
+
+        Args:
+            self: (todo): write your description
+            log: (todo): write your description
+        """
         self.log = torch.cat([self.log, log])
 
     def write_log(self, log, refresh=False):
+        """
+        Write log to file.
+
+        Args:
+            self: (todo): write your description
+            log: (todo): write your description
+            refresh: (bool): write your description
+        """
         print(log)
         self.log_file.write(log + '\n')
         if refresh:
@@ -100,9 +172,22 @@ class checkpoint():
             self.log_file = open(self.dir + '/log.txt', 'a')
 
     def done(self):
+        """
+        Called when the request.
+
+        Args:
+            self: (todo): write your description
+        """
         self.log_file.close()
 
     def plot_psnr(self, epoch):
+        """
+        This function plots of the model.
+
+        Args:
+            self: (todo): write your description
+            epoch: (int): write your description
+        """
         axis = np.linspace(1, epoch, epoch)
         label = 'SR on {}'.format(self.args.data_test)
         fig = plt.figure()
@@ -121,6 +206,16 @@ class checkpoint():
         plt.close(fig)
 
     def save_results(self, filename, save_list, idx, scale):
+        """
+        Save results to a file.
+
+        Args:
+            self: (todo): write your description
+            filename: (str): write your description
+            save_list: (list): write your description
+            idx: (str): write your description
+            scale: (float): write your description
+        """
         filename = '{}/results/{}_x{}_{}'.format(self.dir, filename, scale, idx)
         postfix = ('SR', 'LR', 'HR')
         for v, p in zip(save_list, postfix):
@@ -132,10 +227,27 @@ class checkpoint():
             misc.imsave('{}{}.png'.format(filename, p), np.squeeze(ndarr))
 
 def quantize(img, rgb_range):
+    """
+    Quantize an rgb image.
+
+    Args:
+        img: (array): write your description
+        rgb_range: (array): write your description
+    """
     pixel_range = 255 / rgb_range
     return img.mul(pixel_range).clamp(0, 255).round().div(pixel_range)
 
 def calc_psnr(sr, hr, scale, rgb_range, benchmark=False):
+    """
+    Calculate the psnr noise.
+
+    Args:
+        sr: (array): write your description
+        hr: (array): write your description
+        scale: (float): write your description
+        rgb_range: (todo): write your description
+        benchmark: (array): write your description
+    """
     diff = (sr - hr).data.div(rgb_range)
     shave = scale
     if diff.size(1) > 1:
@@ -164,6 +276,12 @@ def calc_psnr(sr, hr, scale, rgb_range, benchmark=False):
     return -10 * math.log10(mse)
 
 def make_optimizer(args, my_model):
+    """
+    Make an optimizer.
+
+    Args:
+        my_model: (todo): write your description
+    """
     trainable = filter(lambda x: x.requires_grad, my_model.parameters())
 
     if args.optimizer == 'SGD':
@@ -185,6 +303,12 @@ def make_optimizer(args, my_model):
     return optimizer_function(trainable, **kwargs)
 
 def make_scheduler(args, my_optimizer):
+    """
+    Creates a scheduler.
+
+    Args:
+        my_optimizer: (todo): write your description
+    """
     if args.decay_type == 'step':
         scheduler = lrs.StepLR(
             my_optimizer,

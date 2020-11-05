@@ -8,6 +8,14 @@ from torch.autograd import Variable
 
 class VGG(nn.Module):
     def __init__(self, conv_index, rgb_range=1):
+        """
+        Initialize the network.
+
+        Args:
+            self: (todo): write your description
+            conv_index: (str): write your description
+            rgb_range: (float): write your description
+        """
         super(VGG, self).__init__()
         vgg_features = models.vgg19(pretrained=True).features
         modules = [m for m in vgg_features]
@@ -22,7 +30,21 @@ class VGG(nn.Module):
         self.vgg.requires_grad = False
 
     def forward(self, sr, hr):
+        """
+        Perform loss.
+
+        Args:
+            self: (todo): write your description
+            sr: (todo): write your description
+            hr: (todo): write your description
+        """
         def _forward(x):
+            """
+            Forward computation.
+
+            Args:
+                x: (todo): write your description
+            """
             x = self.sub_mean(x)
             x = self.vgg(x)
             return x

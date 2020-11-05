@@ -7,6 +7,13 @@ from torch.autograd import Variable
 
 class Model(nn.Module):
     def __init__(self, args, ckp):
+        """
+        Initialize the model.
+
+        Args:
+            self: (todo): write your description
+            ckp: (int): write your description
+        """
         super(Model, self).__init__()
         print('Making model...')
 
@@ -37,6 +44,14 @@ class Model(nn.Module):
         if args.print_model: print(self.model)
 
     def forward(self, x, idx_scale):
+        """
+        Forward computation.
+
+        Args:
+            self: (todo): write your description
+            x: (todo): write your description
+            idx_scale: (todo): write your description
+        """
         self.idx_scale = idx_scale
         target = self.get_model()
         if hasattr(target, 'set_scale'):
@@ -57,16 +72,38 @@ class Model(nn.Module):
             return self.model(x)
 
     def get_model(self):
+        """
+        Gets the model.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.n_GPUs == 1:
             return self.model
         else:
             return self.model.module
 
     def state_dict(self, **kwargs):
+        """
+        Get the state dictionary.
+
+        Args:
+            self: (todo): write your description
+        """
         target = self.get_model()
         return target.state_dict(**kwargs)
 
     def save(self, apath, epoch, name, is_best=False):
+        """
+        Saves the state of the model.
+
+        Args:
+            self: (todo): write your description
+            apath: (str): write your description
+            epoch: (int): write your description
+            name: (str): write your description
+            is_best: (bool): write your description
+        """
         target = self.get_model()
         torch.save(
             target.state_dict(), 
@@ -85,6 +122,17 @@ class Model(nn.Module):
             )
 
     def load(self, apath, pre_train='.', resume=-1, name='',  cpu=False):
+        """
+        Load the model from the given apath.
+
+        Args:
+            self: (todo): write your description
+            apath: (str): write your description
+            pre_train: (bool): write your description
+            resume: (bool): write your description
+            name: (str): write your description
+            cpu: (str): write your description
+        """
         if cpu:
             kwargs = {'map_location': lambda storage, loc: storage}
         else:
@@ -124,6 +172,15 @@ class Model(nn.Module):
             )
 
     def forward_chop(self, x, shave=10, min_size=160000):
+        """
+        Forward computation.
+
+        Args:
+            self: (todo): write your description
+            x: (todo): write your description
+            shave: (todo): write your description
+            min_size: (int): write your description
+        """
         scale = self.scale[self.idx_scale]
         n_GPUs = min(self.n_GPUs, 4)
         b, c, h, w = x.size()
@@ -170,7 +227,22 @@ class Model(nn.Module):
         return output
 
     def forward_x8(self, x, forward_function):
+        """
+        Perform forward computation.
+
+        Args:
+            self: (todo): write your description
+            x: (todo): write your description
+            forward_function: (todo): write your description
+        """
         def _transform(v, op):
+            """
+            Transform an op to a tensor.
+
+            Args:
+                v: (array): write your description
+                op: (array): write your description
+            """
             if self.precision != 'single': v = v.float()
 
             v2np = v.data.cpu().numpy()

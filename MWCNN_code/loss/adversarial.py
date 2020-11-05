@@ -10,6 +10,13 @@ from torch.autograd import Variable
 
 class Adversarial(nn.Module):
     def __init__(self, args, gan_type):
+        """
+        Initializes the kwargs.
+
+        Args:
+            self: (todo): write your description
+            gan_type: (todo): write your description
+        """
         super(Adversarial, self).__init__()
         self.gan_type = gan_type
         self.gan_k = args.gan_k
@@ -24,6 +31,14 @@ class Adversarial(nn.Module):
         self.scheduler = utility.make_scheduler(args, self.optimizer)
 
     def forward(self, fake, real):
+        """
+        Perform algorithm.
+
+        Args:
+            self: (todo): write your description
+            fake: (todo): write your description
+            real: (todo): write your description
+        """
         fake_detach = fake.detach()
 
         self.loss = 0
@@ -76,6 +91,12 @@ class Adversarial(nn.Module):
         return loss_g
     
     def state_dict(self, *args, **kwargs):
+        """
+        Compute the state dictionary.
+
+        Args:
+            self: (todo): write your description
+        """
         state_discriminator = self.discriminator.state_dict(*args, **kwargs)
         state_optimizer = self.optimizer.state_dict()
 
