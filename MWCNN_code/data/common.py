@@ -19,6 +19,14 @@ from PIL import Image
 
 
 def get_patch_noise(img_tar, patch_size, noise_level):
+    """
+    Get the image.
+
+    Args:
+        img_tar: (str): write your description
+        patch_size: (int): write your description
+        noise_level: (todo): write your description
+    """
 
     ih, iw = img_tar.shape[0:2]
     a = np.random.rand(1)[0] * 0.2 + 0.8
@@ -63,6 +71,13 @@ def get_patch_noise(img_tar, patch_size, noise_level):
 
 
 def add_img_noise(img_tar, noise_level):
+    """
+    Add noise to image.
+
+    Args:
+        img_tar: (array): write your description
+        noise_level: (todo): write your description
+    """
     img_tar = np.expand_dims(img_tar, axis=2)
     #print(img_tar.shape)
     ih, iw = img_tar.shape[0:2]
@@ -78,6 +93,14 @@ def add_img_noise(img_tar, noise_level):
 
 
 def get_patch_bic(img_tar, patch_size, scale_factor):
+    """
+    Get a bic image.
+
+    Args:
+        img_tar: (str): write your description
+        patch_size: (int): write your description
+        scale_factor: (float): write your description
+    """
 
     ih, iw = img_tar.shape[0:2]
     a = np.random.rand(1)[0] * 0.8 + 0.2
@@ -102,6 +125,14 @@ def get_patch_bic(img_tar, patch_size, scale_factor):
 
 
 def get_patch_compress(img_tar, patch_size, quality_factor):
+    """
+    Get an image
+
+    Args:
+        img_tar: (todo): write your description
+        patch_size: (int): write your description
+        quality_factor: (str): write your description
+    """
 
     ih, iw = img_tar.shape[0:2]
     a = np.random.rand(1)[0] * 0.8 + 0.2
@@ -134,6 +165,13 @@ def get_patch_compress(img_tar, patch_size, quality_factor):
     return img_lr, img_tar
 
 def get_img_compress(img_tar, quality_factor):
+    """
+    Get an array
+
+    Args:
+        img_tar: (todo): write your description
+        quality_factor: (str): write your description
+    """
     img_tar = np.expand_dims(img_tar, axis=2)
     ih, iw = img_tar.shape[0:2]
     ih = int(ih // 8 * 8)
@@ -152,7 +190,20 @@ def get_img_compress(img_tar, quality_factor):
 
 
 def set_channel(l, n_channel):
+    """
+    Set the channel to a channel.
+
+    Args:
+        l: (todo): write your description
+        n_channel: (int): write your description
+    """
     def _set_channel(img):
+        """
+        Set the channel to a channel
+
+        Args:
+            img: (array): write your description
+        """
         if img.ndim == 2:
             img = np.expand_dims(img, axis=2)
 
@@ -167,7 +218,20 @@ def set_channel(l, n_channel):
     return [_set_channel(_l) for _l in l]
 
 def np2Tensor(l, rgb_range):
+    """
+    Convert a 2d numpy array.
+
+    Args:
+        l: (todo): write your description
+        rgb_range: (todo): write your description
+    """
     def _np2Tensor(img):
+        """
+        Convert tensor to tensor
+
+        Args:
+            img: (array): write your description
+        """
         np_transpose = np.ascontiguousarray(img.transpose((2, 0, 1)))
         tensor = torch.from_numpy(np_transpose).float()
         tensor.mul_(rgb_range / 255.0)
@@ -177,6 +241,13 @@ def np2Tensor(l, rgb_range):
     return [_np2Tensor(_l) for _l in l]
 
 def add_noise(x, noise='.'):
+    """
+    Add noise to noise.
+
+    Args:
+        x: (array): write your description
+        noise: (todo): write your description
+    """
     if noise is not '.':
         noise_type = noise[0]
         noise_value = int(noise[1:])
@@ -194,11 +265,25 @@ def add_noise(x, noise='.'):
         return x
 
 def augment(l, hflip=True, rot=True):
+    """
+    Transpose an image.
+
+    Args:
+        l: (todo): write your description
+        hflip: (todo): write your description
+        rot: (todo): write your description
+    """
     hflip = hflip and random.random() < 0.5
     vflip = rot and random.random() < 0.5
     rot90 = rot and random.random() < 0.5
 
     def _augment(img):
+        """
+        Transpose of - if the given an image.
+
+        Args:
+            img: (array): write your description
+        """
         if hflip: img = img[:, ::-1, :]
         if vflip: img = img[::-1, :, :]
         if rot90: img = img.transpose(1, 0, 2)

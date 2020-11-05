@@ -15,6 +15,16 @@ import numpy as np
 
 class Trainer():
     def __init__(self, args, loader, my_model, my_loss, ckp):
+        """
+        Initialize the optimizer.
+
+        Args:
+            self: (todo): write your description
+            loader: (todo): write your description
+            my_model: (str): write your description
+            my_loss: (todo): write your description
+            ckp: (int): write your description
+        """
         self.args = args
         self.scale = args.scale
 
@@ -39,6 +49,12 @@ class Trainer():
 
 
     def train(self):
+        """
+        Run the training.
+
+        Args:
+            self: (todo): write your description
+        """
         self.scheduler.step()
 
         self.loss.step()
@@ -96,6 +112,12 @@ class Trainer():
         self.error_last = self.loss.log[-1, -1]
 
     def test(self):
+        """
+        Run the test
+
+        Args:
+            self: (todo): write your description
+        """
         epoch = self.scheduler.last_epoch + 1
         self.ckp.write_log('\nEvaluation:')
         # kernel_test = sio.loadmat('data/Compared_kernels_JPEG_noise_x234.mat')
@@ -173,14 +195,34 @@ class Trainer():
             self.ckp.save(self, epoch, is_best=(best[1][0] + 1 == epoch))
 
     def prepare(self, l, volatile=False):
+        """
+        Prepare the tensor.
+
+        Args:
+            self: (todo): write your description
+            l: (todo): write your description
+            volatile: (todo): write your description
+        """
         device = torch.device('cpu' if self.args.cpu else 'cuda')
         def _prepare(tensor):
+            """
+            Prepare tensor.
+
+            Args:
+                tensor: (todo): write your description
+            """
             if self.args.precision == 'half': tensor = tensor.half()
             return tensor.to(device)
            
         return [_prepare(_l) for _l in l]
 
     def terminate(self):
+        """
+        Terminate the scheduler.
+
+        Args:
+            self: (todo): write your description
+        """
         if self.args.test_only:
             self.test()
             return True

@@ -10,6 +10,13 @@ import torch.utils.data as data
 
 class Demo(data.Dataset):
     def __init__(self, args, train=False):
+        """
+        Initialize files
+
+        Args:
+            self: (todo): write your description
+            train: (todo): write your description
+        """
         self.args = args
         self.name = 'Demo'
         self.scale = args.scale
@@ -24,6 +31,13 @@ class Demo(data.Dataset):
         self.filelist.sort()
 
     def __getitem__(self, idx):
+        """
+        Get the tensor for the tensor.
+
+        Args:
+            self: (todo): write your description
+            idx: (list): write your description
+        """
         filename = os.path.split(self.filelist[idx])[-1]
         filename, _ = os.path.splitext(filename)
         lr = misc.imread(self.filelist[idx])
@@ -32,8 +46,21 @@ class Demo(data.Dataset):
         return common.np2Tensor([lr], self.args.rgb_range)[0], -1, filename
 
     def __len__(self):
+        """
+        Returns the number of files.
+
+        Args:
+            self: (todo): write your description
+        """
         return len(self.filelist)
 
     def set_scale(self, idx_scale):
+        """
+        Set scale.
+
+        Args:
+            self: (todo): write your description
+            idx_scale: (str): write your description
+        """
         self.idx_scale = idx_scale
 

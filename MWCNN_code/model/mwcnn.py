@@ -4,10 +4,25 @@ import torch.nn as nn
 import scipy.io as sio
 
 def make_model(args, parent=False):
+    """
+    Create a model from args
+
+    Args:
+        parent: (todo): write your description
+    """
     return MWCNN(args)
 
 class MWCNN(nn.Module):
     def __init__(self, args, conv=common.default_conv):
+        """
+        Initialize the convolution.
+
+        Args:
+            self: (todo): write your description
+            conv: (todo): write your description
+            common: (todo): write your description
+            default_conv: (str): write your description
+        """
         super(MWCNN, self).__init__()
         n_resblocks = args.n_resblocks
         n_feats = args.n_feats
@@ -59,6 +74,13 @@ class MWCNN(nn.Module):
         self.tail = nn.Sequential(*m_tail)
 
     def forward(self, x):
+        """
+        U move forward.
+
+        Args:
+            self: (todo): write your description
+            x: (todo): write your description
+        """
         x0 = self.d_l0(self.head(x))
         x1 = self.d_l1(self.DWT(x0))
         x2 = self.d_l2(self.DWT(x1))
@@ -70,5 +92,12 @@ class MWCNN(nn.Module):
         return x
 
     def set_scale(self, scale_idx):
+        """
+        Set scale scale.
+
+        Args:
+            self: (todo): write your description
+            scale_idx: (str): write your description
+        """
         self.scale_idx = scale_idx
 
